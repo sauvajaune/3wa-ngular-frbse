@@ -1,0 +1,12 @@
+<form (ngSubmit)="onSubmit(searchForm)" #searchForm="ngForm" class="form-inline p-0">
+
+    <input [(ngModel)]="keywords" name="keywords" placeholder="Keywords" type="search" aria-label="search" class="form-control form-control-sm" required>
+    
+    <button [disabled]="searchForm.invalid" type="submit" class="btn btn-sm btn-dark m-0 ml-2">Search</button>
+
+    <ng-template [ngIf]="isSubmit === true">
+        <p class="px-2 m-0"><small>We found</small> <span class="badge badge-{{ searchResult.length ? 'success' : 'secondary' }} mx-1">{{ searchResult.length }}</span> <small>album{{ searchResult.length > 1 ? 's' : '' }}</small></p>
+        <button (click)="clearSearch()" type="button" class="btn btn-sm btn-secondary m-0">Clear</button>
+    </ng-template>
+    
+</form>

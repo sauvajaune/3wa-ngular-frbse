@@ -1,0 +1,29 @@
+<div *ngIf="isShow" class="border bg-dark text-white p-3 mb-1">
+    <p class="d-flex justify-content-between m-0 mb-2 text-white">
+        <span>
+            <p class="m-0 title">{{ album.title }}</p>
+            <p class="m-0 name">by {{ album.name }}</p>
+        </span>
+        <span class="text-right">
+            <p class="m-0 timerAlbum">{{ timerAlbum }}</p>
+            <p class="m-0 timerTrack">{{ timerTrack }}</p>
+        </span>
+    </p>
+    <div class="progress shadow-sm mb-1">
+        <div class="progress-bar progress-bar-striped progress-bar-animated bg-warning" role="progressbar" [style.width]="ratioAlbum + '%'" aria-valuenow="" aria-valuemin="0" aria-valuemax="100"></div>
+    </div>
+    <div class="progress shadow-sm">
+        <div class="progress-bar progress-bar-striped progress-bar-animated bg-danger" role="progressbar" [style.width]="ratioTrack + '%'" aria-valuenow="" aria-valuemin="0" aria-valuemax="100"></div>
+    </div>
+    <p class="d-flex justify-content-between m-0 text-white">
+        <span class="pt-1 currentTrack">Track #{{ currentTrack }} <span class="track">&laquo; {{ albumList.list[currentTrack-1] }} &raquo;</span></span>
+        <span>
+            <a *ngIf="currentTrack > 1" class="ml-1 shadow-sm" (click)="pressButton('prev')"><img class="glyph-icon" stroke="#ffffff" src="./assets/svg/si-glyph-leftwards-arrow-to-bar-white.svg"></a>
+            <a *ngIf="state === 'stop'" class="ml-1 shadow-sm" (click)="pressButton('play')"><img class="glyph-icon" stroke="#ffffff" src="./assets/svg/si-glyph-triangle-right-white.svg"></a>
+            <a *ngIf="state === 'pause'" class="ml-1 shadow-sm" (click)="pressButton('resume')"><img class="glyph-icon" stroke="#ffffff" src="./assets/svg/si-glyph-triangle-right-white.svg"></a>
+            <a *ngIf="state === 'play'" class="ml-1 shadow-sm" (click)="pressButton('pause')"><img class="glyph-icon" src="./assets/svg/si-glyph-pause-white.svg"></a>
+            <a *ngIf="currentTrack < albumList.list.length" class="ml-1 shadow-sm" (click)="pressButton('next')"><img class="glyph-icon" stroke="#ffffff" src="./assets/svg/si-glyph-rightwards-arrow-to-bar-white.svg"></a>
+            <a class="ml-1 shadow-sm" (click)="pressButton('stop')"><img class="glyph-icon" src="./assets/svg/si-glyph-square-white.svg"></a>
+        </span>
+    </p>
+</div>

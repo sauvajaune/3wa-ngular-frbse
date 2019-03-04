@@ -1,0 +1,33 @@
+.title {
+    font-size: 1.0em;
+    font-weight: bold;
+    text-transform: uppercase;
+    line-height: 1.0;
+}
+
+.name,
+.timerAlbum,
+.timerTrack {
+    font-size: 0.8em;
+    line-height: 1.0;
+}
+
+.progress {
+    height: 0.25rem;
+}
+
+.currentTrack {
+    font-size: 0.8em;
+    .track {
+        text-transform: uppercase;
+        line-height: 1.2;
+    }
+}
+
+.glyph-icon {
+    margin: 0;
+}
+
+a {
+    cursor: pointer;
+}

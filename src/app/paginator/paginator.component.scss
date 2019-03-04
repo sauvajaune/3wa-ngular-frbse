@@ -1,0 +1,6 @@
+li.page-item {
+    cursor: pointer;
+}
+li.page-item.disabled {
+    cursor: default;
+}

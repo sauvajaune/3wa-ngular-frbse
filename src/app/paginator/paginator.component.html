@@ -1,0 +1,32 @@
+<ng-template [ngIf]="_pages > 1">
+
+    <nav aria-label="paginate">
+    
+        <ul class="pagination justify-content-center m-0">
+            
+            <li class="page-item" [class.disabled]="currentPage <= 1">
+                <a class="page-link" (click)="first()">&laquo;</a>
+            </li>
+    
+            <li class="page-item" [class.disabled]="currentPage <= 1">
+                <a class="page-link" (click)="prev()">&lsaquo;</a>
+            </li>
+    
+            <ng-template ngFor let-in [ngForOf]="counter(_pages)" let-i="index">
+                <li class="page-item" [class.active]="currentPage == i+1">
+                    <a class="page-link" (click)="goto(i+1)">{{ i+1 }}</a>
+                </li>
+            </ng-template>
+    
+            <li class="page-item" [class.disabled]="currentPage >= _pages">
+                <a class="page-link" (click)="next()">&rsaquo;</a>
+            </li>
+    
+            <li class="page-item" [class.disabled]="currentPage >= _pages">
+                <a class="page-link" (click)="last()">&raquo;</a>
+            </li>
+        </ul>
+    
+    </nav>
+
+</ng-template>

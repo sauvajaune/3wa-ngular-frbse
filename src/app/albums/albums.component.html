@@ -1,0 +1,115 @@
+<div class="container">
+
+    <!-- TITLE -->
+    <div class="row">
+        <div class="col-12 pb-4">
+            <h1 class="border-bottom pb-2">{{ titlePage }}</h1>
+        </div>
+    </div>
+    <!-- /TITLE -->
+
+    <!-- CONTENT -->
+    <div class="row">
+
+        <!-- SEARCH -->
+        <div class="col-12 mb-4 d-flex justify-content-end">
+            <app-search (searchEvent)="onSearchAlbum($event)"></app-search>
+        </div>
+        <!-- /SEARCH -->
+
+        <!-- ALBUM_DETAILS -->
+        <div class="col-sm-4 album-details">
+            <!-- PARENT send in CHILD a variable "album" equal at the PARENT value of "albumSelected" -->
+            <!-- PARENT get from CHILD a event "playAlbumEvent" and execute the PARENT function "onPlayAlbum" -->
+            <app-album-details [album]="albumSelected" (playAlbumEvent)="onPlayAlbum($event)"></app-album-details>
+        </div>
+        <!-- /ALBUM_DETAILS -->
+
+        <!-- ALBUMS -->
+        <div class="col-sm-8 albums">
+            <div class="container">
+
+                <!-- PLAYER -->
+                <div class="row">
+                    <div class="col-12 p-0 pl-1">
+                        <app-audio-player></app-audio-player>
+                    </div>
+                </div>
+                <!-- PLAYER -->
+                
+                <!-- RESULT -->
+                <ng-template [ngIf]="albums.length > 0" [ngIfElse]="empty">
+                
+                    <!-- LIST -->
+                    <div class="row d-flex">
+                        <div class="col-lg-6 px-0 pl-1 mt-0 mb-1" *ngFor="let album of albumService.paginate(albums, currentPage); let i = index">
+                            
+                            <div class="card mt-0 flex-column h-100" [@played]="album.status">
+                                <div class="card-header text-white bg-{{ album.status == 'on' ? 'warning' : 'dark' }}">{{ album.ref }}</div>
+                                <div class="card-body">
+                                    <img class="img-fluid rounded-circle shadow-sm mb-4" src="{{ album.url }}" alt="{{ album.name }}" width="100" />
+                                    <h5 class="card-title mb-0"><a routerLink="/album/{{album.id}}">{{ album.title }}</a></h5>
+                                    <p class="card-title">by {{ album.name }}</p>
+                                    <p class="card-text text-muted"><small>{{ album.description }}</small></p>
+                                    <ng-template [ngIf]="album.tags">
+                                        <p class="card-text">
+                                            <span *ngFor="let tag of album.tags" class="badge badge-info mx-1">{{ tag }}</span>
+                                        </p>
+                                    </ng-template>
+                                    <p class="card-text d-flex align-items-top justify-content-between border-top pt-2">
+                                        <span>
+                                            <img class="glyph-icon" src="./assets/svg/si-glyph-heart.svg" />
+                                            <ng-template [ngIf]="album.like" [ngIfElse]="noLike">
+                                                <small class="mr-2">{{ album.like }}</small>
+                                            </ng-template>
+                                            <ng-template #noLike>
+                                                <small class="mr-2">0</small>
+                                            </ng-template>
+                                            <ng-template [ngIf]="album.duration">
+                                                <img class="glyph-icon" src="./assets/svg/si-glyph-timer.svg" />
+                                                <small>
+                                                    {{ (album.duration - album.duration % 60) / 60 }} min 
+                                                    <ng-template [ngIf]="album.duration % 60">{{ album.duration % 60 }} sec</ng-template>
+                                                </small>
+                                            </ng-template>
+                                        </span>
+                                        <ng-template [ngIf]="album == albumSelected" [ngIfElse]="noSelect">
+                                            <span class="btn btn-sm btn-{{ album.status == 'on' ? 'warning text-white' : 'secondary text-dark' }} disabled m-0">{{ album.status == 'on' ? 'played' : 'ready' }}</span>
+                                        </ng-template>
+                                        <ng-template #noSelect>
+                                            <button (click)="onSelectAlbum(album)" class="btn btn-sm btn-dark m-0">select</button>
+                                        </ng-template>
+                                    </p>
+                                </div><!-- /.card-body -->
+                            </div><!-- /.card -->
+
+                        </div><!-- /.col -->
+                    </div><!-- /.row -->
+                    <!-- /LIST -->
+                
+                    <!-- PAGINATOR -->
+                    <div class="row">
+                        <div class="col-12 py-3">
+                            <app-paginator (switchPage)="switchPage($event)" [items]="albums.length" [itemsPerPage]="albumService.getAlbumsPerPage()" [currentPage]="currentPage"></app-paginator>
+                        </div>
+                    </div>
+                    <!-- /PAGINATOR -->
+                    
+                </ng-template>
+                <!-- /RESULT -->
+
+                <!-- NO_RESULT -->
+                <ng-template #empty>
+                    <p class="m-0 py-4 text-muted">No album.</p>
+                </ng-template>
+                <!-- /NO_RESULT -->
+
+            </div><!-- /.container -->
+            
+        </div><!-- /.col -->
+        <!-- /ALBUMS -->
+
+    </div><!-- /.row -->
+    <!-- /CONTENT -->
+
+</div><!-- /.container -->

@@ -1,0 +1,58 @@
+<div class="container">
+
+    <!-- TITLE -->
+    <div class="row">
+        <div class="col-12 pb-4">
+            <h1 class="border-bottom pb-2">{{ titlePage }}</h1>
+        </div>
+    </div>
+    <!-- /TITLE -->
+
+    <!-- DESCRIPTION -->
+    <div class="row">
+        <div class="col-12">
+
+            <ng-template [ngIf]="album" [ngIfElse]="unknown">
+                <div class="card">
+                    <div class="card-header text-white bg-dark">{{ album.ref }}</div>
+                    <div class="card-body">
+                        <img class="img-fluid rounded-circle shadow-sm mb-4" src="{{ album.url }}" alt="{{ album.name }}" width="100" />
+                        <h5 class="card-title">{{ album.name }}</h5>
+                        <p class="card-text text-muted">{{ album.description }}</p>
+                        <p class="mb-1">
+                            <small>Duration: 
+                                <ng-template [ngIf]="album.duration">
+                                    {{ (album.duration - album.duration % 60) / 60 }} min 
+                                    <ng-template [ngIf]="album.duration % 60">
+                                        {{ album.duration % 60 }} sec
+                                    </ng-template>
+                                </ng-template>
+                            </small>
+                        </p>
+                        <p class="mb-1">
+                            <small>Like: 
+                                <ng-template [ngIf]="album.like">
+                                    {{ album.like }}
+                                </ng-template>
+                            </small>
+                        </p>
+                        <ng-template [ngIf]="album.tags">
+                            <p class="card-text">
+                                <span *ngFor="let tag of album.tags" class="badge badge-info mr-1">{{ tag }}</span>
+                            </p>
+                        </ng-template>
+                    </div><!-- /.card-body -->
+                </div><!-- /.card -->
+            </ng-template>
+            
+            <ng-template #unknown>
+                <p><code class="text-danger">Unknown album!</code></p>
+            </ng-template>
+
+            <p class="my-3"><a routerLink="/albums" class="btn btn-sm btn-secondary">back</a></p>
+
+        </div><!-- /.col -->
+    </div><!-- /.row -->
+    <!-- /DESCRIPTION -->
+
+</div><!-- /.container -->
